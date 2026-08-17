@@ -7,7 +7,8 @@ const authRoutes = require("./routes/auth");
 const providerRoutes = require("./routes/providers");
 const bookingRoutes = require("./routes/bookings");
 const adminRoutes = require("./routes/admin");
-
+// Seed starter data when the server starts
+require("./seed");
 const app = express();
 app.use(cors());
 // Raised limit so base64-encoded portfolio photos (a few MB each) can be
