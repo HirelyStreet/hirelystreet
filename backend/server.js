@@ -14,7 +14,7 @@ app.use(cors());
 // uploaded as JSON without Express rejecting the request body as too large.
 app.use(express.json({ limit: "8mb" }));
 
-app.get("/api/health", (req, res) => res.json({ ok: true, service: "hirelystreet-api" }));
+app.get("/healthz", (req, res) => res.json({ ok: true, service: "hirelystreet-api" }));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/providers", providerRoutes);
@@ -28,6 +28,6 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`HirelyStreet API running on http://localhost:${PORT}`);
 });
