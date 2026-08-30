@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { api } from "../api";
+import EmptyState from "../components/EmptyState";
 
 export default function CustomerExplore() {
   const nav = useNavigate();
@@ -67,9 +68,9 @@ export default function CustomerExplore() {
 
       {error && <div className="error-banner">{error}</div>}
       {loading ? (
-        <div className="empty">Loading providers...</div>
+        <EmptyState emoji="🔎" title="Finding professionals..." />
       ) : providers.length === 0 ? (
-        <div className="empty">No professionals found. Try a different search, or make sure the backend was seeded (`npm run seed`).</div>
+        <EmptyState emoji="🌿" title="No professionals found" text="Try a different search or category. If this is a fresh backend, make sure it has been seeded." action="Clear search" onAction={() => { setQ(""); onCategoryChange(""); }} />
       ) : (
         providers.map(p => (
           <div key={p.id} className="card provider-row" style={{ cursor: "pointer" }} onClick={() => nav(`/provider/${p.id}`)}>

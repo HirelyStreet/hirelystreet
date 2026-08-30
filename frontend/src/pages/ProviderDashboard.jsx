@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import { api } from "../api";
+import EmptyState from "../components/EmptyState";
 
 const STATUS_TONE = { upcoming: "brand", active: "warn", completed: "success", cancelled: "danger" };
 const NEXT_STATUS = { upcoming: "active", active: "completed" };
@@ -119,8 +120,8 @@ export default function ProviderDashboard() {
 
       {error && <div className="error-banner">{error}</div>}
       <h3>Bookings</h3>
-      {loading ? <div className="empty">Loading...</div> : bookings.length === 0 ? (
-        <div className="empty">No bookings yet. Customers will find you once your profile is complete — see backend `PUT /api/providers/me/profile` and `POST /api/providers/me/services` to add your services.</div>
+      {loading ? <EmptyState emoji="⏳" title="Loading..." /> : bookings.length === 0 ? (
+        <EmptyState emoji="📅" title="No bookings yet" text="Complete your profile and publish a service so customers can discover you." action="Customize profile" onAction={() => nav("/provider/profile")} />
       ) : bookings.map(b => (
         <div key={b.id} className="card">
           <div style={{ display: "flex", gap: 12, alignItems: "center" }}>

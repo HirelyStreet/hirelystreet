@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../api";
 import { categoryMeta } from "../categoryMeta";
+import EmptyState from "../components/EmptyState"
 
 const CATEGORY_DESCRIPTIONS = {
   "Home Cleaning": "Cleaning experts for your home",
@@ -65,9 +66,9 @@ export default function ServicesByMode() {
 
       {error && <div className="error-banner">{error}</div>}
       {loading ? (
-        <div className="empty">Loading categories...</div>
+        <EmptyState emoji="⏳" title="Loading categories..." />
       ) : visible.length === 0 ? (
-        <div className="empty">No {mode} categories yet — an admin can add some from Admin → Categories.</div>
+        <EmptyState emoji="🧰" title={`No ${mode} services yet`} text="There aren’t any categories in this mode yet. Check back soon." />
       ) : (
         visible.map(c => {
           const meta = categoryMeta(c.name);

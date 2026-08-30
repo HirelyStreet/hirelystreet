@@ -20,6 +20,7 @@ import PaymentMethods from "./pages/PaymentMethods";
 import ProviderDashboard from "./pages/ProviderDashboard";
 import ProviderProfileEdit from "./pages/ProviderProfileEdit";
 import AdminDashboard from "./pages/AdminDashboard";
+import EmptyState from "./components/EmptyState";
 
 // Pages a provider/admin shouldn't be browsing (these are the customer app) —
 // send them back to their own dashboard instead. Guests and customers pass through.
@@ -32,7 +33,7 @@ function CustomerOnly({ children }) {
 
 function Protected({ role, children }) {
   const { user, loading } = useAuth();
-  if (loading) return <div className="empty">Loading...</div>;
+  if (loading) return <EmptyState emoji="⏳" title="Loading..." />;
   if (!user) return <Navigate to="/login" replace />;
   if (role && user.role !== role) {
     const home = user.role === "customer" ? "/" : user.role === "provider" ? "/provider" : "/admin";
@@ -91,10 +92,11 @@ function TopBar() {
 }
 
 const CUSTOMER_TABS = [
-  { path: "/", label: "Home", icon: "🏠" },
-  { path: "/bookings", label: "Bookings", icon: "📅" },
-  { path: "/services", label: "Services", icon: "🔲" },
-  { path: "/profile", label: "Profile", icon: "👤" },
+  { path: "/", label: "Home", icon: "⌂" },
+  { path: "/explore", label: "Explore", icon: "⌕" },
+  { path: "/bookings", label: "Bookings", icon: "▣" },
+  { path: "/messages", label: "Chats", icon: "◌" },
+  { path: "/profile", label: "Profile", icon: "♙" },
 ];
 
 function BottomNav() {
@@ -125,7 +127,7 @@ export default function App() {
   const { loading } = useAuth();
 
   if (loading) {
-    return <div className="empty">Loading HirelyStreet...</div>;
+    return <EmptyState emoji="🌱" title="Loading HirelyStreet..." />;
   }
 
   return (
@@ -156,7 +158,7 @@ export default function App() {
 
           <Route path="/admin" element={<Protected role="admin"><AdminDashboard /></Protected>} />
 
-          <Route path="*" element={<div className="empty">Page not found</div>} />
+          <Route path="*" element={<EmptyState emoji="🧭" title="Page not found" text="That page wandered off. Try heading back home." />} />
         </Routes>
       </div>
       <BottomNav />
