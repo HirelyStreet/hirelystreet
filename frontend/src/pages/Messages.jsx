@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getConversations, getConversation, openConversation, sendMessage } from "../messagesStore";
 import { useToast } from "../Toast";
+import EmptyState from "../components/EmptyState";
 
 export default function Messages() {
   const nav = useNavigate();
@@ -36,12 +37,7 @@ export default function Messages() {
     return (
       <div>
         <h1 style={{ marginBottom: 16 }}>Messages</h1>
-        <div className="empty">
-          No conversations yet.
-          <div style={{ marginTop: 12 }}>
-            <button className="btn btn-primary" onClick={() => nav("/explore")}>Find a provider to message</button>
-          </div>
-        </div>
+        <EmptyState emoji="💬" title="No conversations yet" text="Start a chat with a provider after you find a service you like." action="Explore services" onAction={() => nav("/explore")} />
       </div>
     );
   }

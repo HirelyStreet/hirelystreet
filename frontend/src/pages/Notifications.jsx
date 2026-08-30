@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getNotifications, markRead } from "../notificationsStore";
+import EmptyState from "../components/EmptyState";
 
 export default function Notifications() {
   const nav = useNavigate();
@@ -20,7 +21,7 @@ export default function Notifications() {
   return (
     <div>
       <h1 style={{ marginBottom: 16 }}>Notifications</h1>
-      {items.length === 0 && <div className="empty">No notifications yet.</div>}
+      {items.length === 0 && <EmptyState emoji="🔔" title="You’re all caught up" text="New booking and account updates will appear here." />}
       {items.map(n => (
         <div key={n.id} className="menu-row" style={{ cursor: "pointer", background: n.read ? "#fff" : "var(--brand-50)" }} onClick={() => open(n)}>
           <div className="icon">{n.icon}</div>

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import QRCode from "qrcode";
 import { useAuth } from "../AuthContext";
 import { api } from "../api";
+import EmptyState from "../components/EmptyState";
 
 const STATUS_TONE = { upcoming: "brand", active: "warn", completed: "success", cancelled: "danger" };
 const TABS = ["upcoming", "completed", "cancelled"];
@@ -93,9 +94,9 @@ export default function CustomerBookings() {
 
       {error && <div className="error-banner">{error}</div>}
       {user && loading ? (
-        <div className="empty">Loading your bookings...</div>
+        <EmptyState emoji="⏳" title="Loading your bookings..." />
       ) : user && filtered.length === 0 ? (
-        <div className="empty">No {tab} bookings.</div>
+        <EmptyState emoji={tab === "cancelled" ? "🌱" : "📅"} title={`No ${tab} bookings yet`} text="Your bookings will appear here once you book a service." action="Explore services" onAction={() => nav("/explore")} />
       ) : null}
 
       {user && filtered.map(b => (

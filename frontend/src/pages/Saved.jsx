@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getSaved, removeSaved } from "../savedStore";
 import { useToast } from "../Toast";
+import EmptyState from "../components/EmptyState";
 
 export default function Saved() {
   const nav = useNavigate();
@@ -23,12 +24,7 @@ export default function Saved() {
     return (
       <div>
         <h1 style={{ marginBottom: 16 }}>Saved</h1>
-        <div className="empty">
-          No saved providers yet.
-          <div style={{ marginTop: 12 }}>
-            <button className="btn btn-primary" onClick={() => nav("/explore")}>Explore services</button>
-          </div>
-        </div>
+        <EmptyState emoji="♡" title="No saved services yet" text="Save providers you love and they’ll show up here." action="Explore services" onAction={() => nav("/explore")} />
       </div>
     );
   }
